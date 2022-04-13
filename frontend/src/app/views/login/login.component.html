@@ -1,0 +1,29 @@
+  <span class="span-logo">
+    <a routerLink="/">
+        <img class="logo" src="assets/img/logo.png" alt="logo">
+    </a>
+  </span>
+  <div class="container">
+
+  <div class="example-container">
+    <h3>Login</h3>
+    <mat-form-field appearance="fill" class="label">
+      <mat-label>E-mail</mat-label>
+      <input matInput placeholder="pat@example.com" [formControl]="email" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="label">
+      <mat-label>Senha</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    <div style="margin: 10px 0px 20px 0px;">
+      <span class="novo-user">Novo Usuário?</span>
+      <span class="cadastrar" (click)="openUserDialog()">Cadastre-se aqui</span>
+    </div>
+      <button routerLink="home" class="button" mat-raised-button >Entrar</button>
+  </div>
+</div>
