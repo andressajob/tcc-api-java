@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html layout:decorate="~{/layouts/main-all}" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Erro - SimuladOn-line</title>
+</head>
+<div layout:fragment="content">
+    <div class="text-center">
+        <h1 class="text-center" th:text="#{error}"></h1>
+        <h1><i class="fa fa-frown-o"></i></h1>
+        <h2 class="text-center" th:text="${status + ' ' + error}"></h2>
+        <a class="btn btn-primary" href="/">
+            <i class="fa fa-home"></i><span th:text="#{home}"></span>
+        </a>
+    </div>
+</div>
+</html>
