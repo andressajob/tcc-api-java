@@ -17,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
 
-    public UserService(UserRepository userRepository, RoleService roleService) {
+	public UserService(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
         this.roleService = roleService;
     }
@@ -32,6 +32,12 @@ public class UserService {
                 if (user.getRoles().isEmpty()) {
                     roles.add(roleService.getOne(1L));
                     user.setRoles(roles);
+                }
+                if (user.getId() != null) {
+                    if (userRepository.getOne(user.getId()).isActive())
+                        user.setActive(true);
+                } else {
+                    user.setActive(true);
                 }
                 String hashedPassword = passwordEncoder.encode(user.getPassword()); //encript password
                 user.setPassword(hashedPassword);
