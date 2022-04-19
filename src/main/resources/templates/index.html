@@ -1,0 +1,134 @@
+<html layout:decorate="~{/layouts/main}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div layout:fragment="content">
+
+    <!-- Simulateds -->
+    <section id="simulateds">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a href="/simulated/list">
+                        <h2 class="section-heading" th:text="#{simulated.list}"></h2>
+                    </a>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-6">
+            <span class="fa-stack fa-4x">
+              <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+            </span>
+                    <div class="row text-center">
+                        <h4 class="service-heading">Sistema responsivo e totalmente on-line</h4>
+                        <p class="text-muted">Você pode realizar simulados a qualquer momento e a partir de qualquer
+                            dispositivo que possua conexão com a internet.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-cog fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="service-heading">Opções</h4>
+                    <p class="text-muted">Os simulados são gerados com questões selecionadas aleatoriamente de acordo
+                        com a sua solicitação.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Questions -->
+    <section class="bg-light" id="questions" sec:authorize="hasRole('ROLE_TEACHER') || hasRole('ROLE_ADMIN')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading" th:text="#{question.list}"></h2>
+                    <h3 class="section-subheading text-muted">As questões que estão presentes nos simulados são
+                        classificadas em categorias para facilitar a geração de simulados.</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <h4 class="service-heading">Conhecimentos Gerais</h4>
+                    <p class="text-muted">
+                        Fatos recentes em todo mundo com relação em diversas áreas do conhecimento.
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4 class="service-heading">Conhecimentos Específicos</h4>
+                    <p class="text-muted">
+                        Específico apenas (por enquanto) na área de análise e desenvolvimento de sistema.
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4 class="service-heading">Português</h4>
+                    <p class="text-muted">
+                        Diversos tópicos presentes no ensino da lingua portuguesa.
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4 class="service-heading">Conhecimentos Gerais</h4>
+                    <p class="text-muted">
+                        Raciocínio lógico, matemática básica até a matemática do ensino médio.
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4 class="service-heading">Legislação</h4>
+                    <p class="text-muted">
+                        Conteúdo de diversas leis e decretos brasileiros.
+                    </p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <h4 class="service-heading">Informática</h4>
+                    <p class="text-muted">
+                        Conteúdo desde informática básica até pacote Office.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meu perfil -->
+    <section class="bg-light" id="user-profile">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <a href="/user/profile">
+                        <h2 class="section-heading">Meu perfil</h2>
+                    </a>
+                    <h3 class="section-subheading text-muted">Após a realização de simulados é possível verificar
+                        alguns dos gráficos que são gerados para a percepção do seu desempenho e quais áreas de
+                        conhecimento necessitam de maior foco. Para visualizar estas informações clique no seu nome no
+                        menu superior e selecione o gráfico requerido.</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-bar-chart fa-stack-1x fa-inverse"></i>
+                    </span>
+                            <h4 class="service-heading">Acertos por categoria</h4>
+                            <p class="text-muted">
+                                Neste gráfico são identificadas quantas questões você realizou e acertou em
+                                cada categoria de conhecimento.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                    <span class="fa-stack fa-4x">
+                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fa fa-bar-chart fa-stack-1x fa-inverse"></i>
+                    </span>
+                            <h4 class="service-heading">Acertos por simulado</h4>
+                            <p class="text-muted">
+                                O gráfico apresenta a quantidade total de acertos para cada simulado realizado,
+                                indicando a data em que foi criado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</html>
