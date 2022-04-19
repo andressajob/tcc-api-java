@@ -6,9 +6,18 @@
 
 <mat-form-field appearance="fill">
   <mat-label>Mês de despesas</mat-label>
-  <mat-select [(ngModel)]="selectedValue" name="mes" (selectionChange)="updateSelectedValue()">
+  <mat-select [(ngModel)]="selectedValueMes" name="mes" (selectionChange)="updateSelectedValueMes()">
     <mat-option *ngFor="let mes of meses" [value]="mes.value">
       {{mes.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field style="margin-left: 10px" appearance="fill">
+  <mat-label>Ano</mat-label>
+  <mat-select [(ngModel)]="selectedValueAno" name="ano" (selectionChange)="updateSelectedValueAno()">
+    <mat-option *ngFor="let ano of anos" [value]="ano.value">
+      {{ano.viewValue}}
     </mat-option>
   </mat-select>
 </mat-form-field>

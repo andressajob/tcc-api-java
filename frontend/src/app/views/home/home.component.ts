@@ -1,6 +1,6 @@
 import { HeaderService } from './../../components/template/header/header.service';
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DespesaComponent } from '../despesa/despesa.component';
 
 
@@ -12,6 +12,11 @@ export interface PeriodicElement {
 }
 
 interface Mes {
+  value: string;
+  viewValue: string;
+}
+
+interface Ano {
   value: string;
   viewValue: string;
 }
@@ -35,10 +40,12 @@ export class HomeComponent implements OnInit {
 
   displayedColumns: string[] = ['nomeDespesa', 'descricaoDespesa', 'valorDespesa', 'actions'];
   dataSource = ELEMENT_DATA;
-  mes: string
+  mes: string;
+  ano: string;
   valorRestanteDoMes: number;
   valorTotalDisponivel: number = 2000;
-  selectedValue: string = 'janeiro';
+  selectedValueMes: string = 'janeiro';
+  selectedValueAno: string = '2022';
   titleOpenDespesaDialog: string;
 
   meses: Mes[] = [
@@ -55,6 +62,12 @@ export class HomeComponent implements OnInit {
     {value: 'dezembro', viewValue: 'Dezembro'},
   ];
 
+  anos: Ano[] = [
+    {value: '2020', viewValue: '2020'},
+    {value: '2021', viewValue: '2021'},
+    {value: '2022', viewValue: '2022'},
+  ];
+
   constructor(
     private headerService: HeaderService,
     public dialog: MatDialog
@@ -67,14 +80,21 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.updateSelectedValue();
+    this.updateSelectedValueMes();
+    this.updateSelectedValueAno();
   }
 
-  updateSelectedValue(){
-
-    if (this.selectedValue) {
-    var mesAtual = this.meses.find(x => x.value === this.selectedValue);  
+  updateSelectedValueMes(){
+    if (this.selectedValueMes) {
+    var mesAtual = this.meses.find(x => x.value === this.selectedValueMes);
     this.mes = mesAtual.viewValue;
+    }
+  }
+
+  updateSelectedValueAno(){
+    if (this.selectedValueAno) {
+    var anoAtual = this.anos.find(x => x.value === this.selectedValueAno);
+    this.ano = anoAtual.viewValue;
     }
   }
 
