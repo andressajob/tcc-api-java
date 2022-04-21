@@ -4,6 +4,7 @@ import {FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import { UserComponent } from '../user/user.component';
 import { LoginService } from './login..component.service';
+import { User } from './login.component.model';
 
 
 export interface PeriodicElement {
