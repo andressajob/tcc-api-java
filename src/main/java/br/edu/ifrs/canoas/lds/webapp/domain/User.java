@@ -23,7 +23,6 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private boolean active;
     @Column(name = "users_roles")
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -32,12 +31,11 @@ public class User {
         roles = new HashSet<>();
     }
 
-    public User(String name, String username, String email, String password, boolean active, Set<Role> roles) {
+    public User(String name, String username, String email, String password, Set<Role> roles) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.active = active;
         this.roles = roles;
     }
 
@@ -79,14 +77,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public Set<Role> getRoles() {

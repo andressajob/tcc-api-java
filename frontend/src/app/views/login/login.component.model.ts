@@ -1,7 +1,13 @@
 export class User {
-    id: string;
+    id: number;
     name: string;
+    username: string;
     email: string;
     password: string;
-    roles: string;
+    roles: Roles[];
+}
+
+export class Roles {
+    id: number;
+    role: string;
 }

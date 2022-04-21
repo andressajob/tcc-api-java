@@ -33,12 +33,6 @@ public class UserService {
                     roles.add(roleService.getOne(1L));
                     user.setRoles(roles);
                 }
-                if (user.getId() != null) {
-                    if (userRepository.getOne(user.getId()).isActive())
-                        user.setActive(true);
-                } else {
-                    user.setActive(true);
-                }
                 String hashedPassword = passwordEncoder.encode(user.getPassword()); //encript password
                 user.setPassword(hashedPassword);
                 user.setUsername(user.getUsername().toLowerCase());

@@ -26,7 +26,7 @@ public class UserDetailsImplService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		if (username == (null))
 			return null;
-		return this.userRepository.findByUsernameAndActiveIsTrue(username.toLowerCase())
+		return this.userRepository.findByUsername(username.toLowerCase())
 				.map(user -> new UserImpl(user.getUsername(), user.getPassword(),
 						user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList()), user))
 				.orElseThrow(() -> new UsernameNotFoundException("couldn't find " + username + "!"));
