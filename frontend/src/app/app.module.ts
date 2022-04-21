@@ -38,6 +38,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { LoginService } from './views/login/login..component.service';
 
 
 
@@ -88,7 +89,7 @@ registerLocaleData(localePt);
     
   ],
   providers: [{
-    provide: LOCALE_ID,
+    provide: LoginService, 
     useValue: 'pt-BR'
   }],
   bootstrap: [AppComponent]

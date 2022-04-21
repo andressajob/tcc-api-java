@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     public dialog: MatDialog,
-    private serviceLogin: LoginService
+    private loginService: LoginService
     ) {
     headerService.headerData = {
       title: 'Início',
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let batata = this.serviceLogin.findAll().subscribe(data => {
+    this.loginService.findAll().subscribe(data => {
       this.users = data;
       console.log(this.users);
     });
