@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   EDIT_DESPESA: string =  'Edit Despesa'
   ADICIONAR_DESPESA: string = 'Adicionar Despesa'
-  
+  users: User[];
 
   displayedColumns: string[] = ['nomeDespesa', 'descricaoDespesa', 'valorDespesa', 'actions'];
   dataSource = ELEMENT_DATA;
@@ -82,8 +82,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let batata = this.serviceLogin.findAll();
-    console.log(batata);
+    let batata = this.serviceLogin.findAll().subscribe(data => {
+      this.users = data;
+      console.log(this.users);
+    });
   }
 
   openUserDialog() {
