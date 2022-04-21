@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import { UserComponent } from '../user/user.component';
+import { LoginService } from './login..component.service';
 
 
 export interface PeriodicElement {
@@ -60,7 +61,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private headerService: HeaderService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private serviceLogin: LoginService
     ) {
     headerService.headerData = {
       title: 'Início',
@@ -80,7 +82,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    let batata = this.serviceLogin.findAll();
+    console.log(batata);
   }
 
   openUserDialog() {
