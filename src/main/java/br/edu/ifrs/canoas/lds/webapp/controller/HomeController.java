@@ -2,6 +2,8 @@ package br.edu.ifrs.canoas.lds.webapp.controller;
 
 import java.util.List;
 
+import br.edu.ifrs.canoas.lds.webapp.domain.Finances;
+import br.edu.ifrs.canoas.lds.webapp.domain.Report;
 import br.edu.ifrs.canoas.lds.webapp.service.FinancesService;
 import br.edu.ifrs.canoas.lds.webapp.service.ReportService;
 import br.edu.ifrs.canoas.lds.webapp.service.RoleService;
@@ -33,12 +35,12 @@ public class HomeController {
     }
 
     @GetMapping("/report")
-    public void getUserReport() {
-        reportService.findAll();
+    public List<Report> getUserReport() {
+        return reportService.findAll();
     }
 
     @GetMapping("/finances")
-    public void getUserFinances(){
-        financesService.findAll();
+    public List<Finances> getUserFinances(){
+        return financesService.findAll();
     }
 }
