@@ -2,6 +2,8 @@ package br.edu.ifrs.canoas.lds.webapp.controller;
 
 import java.util.List;
 
+import br.edu.ifrs.canoas.lds.webapp.service.FinancesService;
+import br.edu.ifrs.canoas.lds.webapp.service.ReportService;
 import br.edu.ifrs.canoas.lds.webapp.service.RoleService;
 import br.edu.ifrs.canoas.lds.webapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,15 @@ import br.edu.ifrs.canoas.lds.webapp.domain.User;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-//@Controller
 public class HomeController {
 	private UserService userService;
+    private ReportService reportService;
+    private FinancesService financesService;
     @Autowired
-    public HomeController(UserService userService) {
+    public HomeController(UserService userService,ReportService reportService,FinancesService financesService) {
         this.userService = userService;
+        this.reportService = reportService;
+        this.financesService = financesService;
     }
 
     @GetMapping("/users")
@@ -27,7 +32,13 @@ public class HomeController {
         return userService.findAll();
     }
 
-    @GetMapping("/")
-    public void getHome() {
+    @GetMapping("/report")
+    public void getUserReport() {
+        reportService.findAll();
+    }
+
+    @GetMapping("/finances")
+    public void getUserFinances(){
+        financesService.findAll();
     }
 }
