@@ -5,4 +5,4 @@ INSERT INTO authorities(id, authority, username) VALUES (1, 'USER', 'user');
 -- REPORT
 INSERT INTO report (id, balance, month, year) VALUES (1001,100,05,2022), (1002,-500,01,2022), (1003,700,11,2021);
 -- FINANCES
-INSERT INTO finances (id, description, is_cost, month, year, name, value, report_id, user_id) VALUES (1001, 'descricao', true, 01, 2022, 'compra renner', 150, 1003, 1001),(1002, 'descricao', false, 01, 2022, 'salariozaum', 1500, 1003, 1001);
+INSERT INTO finances (id, description, cost, month, year, name, value, report_id, user_id) VALUES (1001, 'descricao', true, 01, 2022, 'compra renner', 150, 1003, 1001),(1002, 'descricao', false, 01, 2022, 'salariozaum', 1500, 1003, 1001);

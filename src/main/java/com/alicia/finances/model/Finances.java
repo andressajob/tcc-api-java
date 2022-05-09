@@ -1,6 +1,13 @@
 package com.alicia.finances.model;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Id;
+
 
 @Entity
 @Table(name = "finances")
@@ -13,25 +20,24 @@ public class Finances {
     private String description;
     private int month;
     private int year;
-    private boolean isCost;
+    private boolean cost;
     @ManyToOne
     private User user;
     @ManyToOne
     private Report report;
 
-    public Finances(Long id, String name, double value, String description, int month, int year, boolean isCost, User user, Report report) {
-        this.id = id;
+    public Finances() {
+    }
+
+    public Finances(String name, double value, String description, int month, int year, boolean cost, com.alicia.finances.model.User user, com.alicia.finances.model.Report report) {
         this.name = name;
         this.value = value;
         this.description = description;
         this.month = month;
         this.year = year;
-        this.isCost = isCost;
+        this.cost = cost;
         this.user = user;
         this.report = report;
-    }
-
-    public Finances() {
     }
 
     public Long getId() {
@@ -83,26 +89,26 @@ public class Finances {
     }
 
     public boolean isCost() {
-        return isCost;
+        return cost;
     }
 
     public void setCost(boolean cost) {
-        isCost = cost;
+        this.cost = cost;
     }
 
-    public User getUser() {
+    public com.alicia.finances.model.User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(com.alicia.finances.model.User user) {
         this.user = user;
     }
 
-    public Report getReport() {
+    public com.alicia.finances.model.Report getReport() {
         return report;
     }
 
-    public void setReport(Report report) {
+    public void setReport(com.alicia.finances.model.Report report) {
         this.report = report;
     }
 }
