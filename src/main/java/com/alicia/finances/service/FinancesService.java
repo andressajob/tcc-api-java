@@ -1,9 +1,8 @@
-package br.edu.ifrs.canoas.lds.webapp.service;
+package com.alicia.finances.service;
 
-import br.edu.ifrs.canoas.lds.webapp.domain.Finances;
-import br.edu.ifrs.canoas.lds.webapp.domain.Role;
-import br.edu.ifrs.canoas.lds.webapp.repository.FinancesRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alicia.finances.model.Finances;
+import com.alicia.finances.repository.FinancesRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

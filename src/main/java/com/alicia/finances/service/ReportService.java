@@ -1,9 +1,8 @@
-package br.edu.ifrs.canoas.lds.webapp.service;
+package com.alicia.finances.service;
 
-import br.edu.ifrs.canoas.lds.webapp.domain.Finances;
-import br.edu.ifrs.canoas.lds.webapp.domain.Report;
-import br.edu.ifrs.canoas.lds.webapp.repository.FinancesRepository;
-import br.edu.ifrs.canoas.lds.webapp.repository.ReportRepository;
+
+import com.alicia.finances.model.Report;
+import com.alicia.finances.repository.ReportRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

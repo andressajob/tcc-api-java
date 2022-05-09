@@ -1,4 +1,4 @@
-package br.edu.ifrs.canoas.lds.webapp.domain;
+package com.alicia.finances.model;
 
 import javax.persistence.*;
 

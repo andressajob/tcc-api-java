@@ -1,6 +1,6 @@
-package br.edu.ifrs.canoas.lds.webapp.repository;
+package com.alicia.finances.repository;
 
-import br.edu.ifrs.canoas.lds.webapp.domain.User;
+import com.alicia.finances.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package br.edu.ifrs.canoas.lds.webapp.domain;
+package com.alicia.finances.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,20 +23,19 @@ public class User {
     private String username;
     private String email;
     private String password;
-    @Column(name = "users_roles")
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private boolean enabled;
 
     public User() {
-        roles = new HashSet<>();
+
     }
 
-    public User(String name, String username, String email, String password, Set<Role> roles) {
+    public User(Long id, String name, String username, String email, String password, boolean enabled) {
+        this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -79,11 +78,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

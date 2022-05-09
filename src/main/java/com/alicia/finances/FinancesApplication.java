@@ -1,12 +1,12 @@
-package br.edu.ifrs.canoas.lds.webapp;
+package com.alicia.finances;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AndressajobApplication {
+public class FinancesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AndressajobApplication.class, args);
+		SpringApplication.run(FinancesApplication.class, args);
 	}
 }

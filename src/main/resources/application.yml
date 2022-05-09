@@ -1,25 +1,22 @@
-server.error.whitelabel.enabled: false
-spring:
-  thymeleaf:
-    prefix: classpath:/templates
-    cache: false
-  mvc:
-    favicon:
-      enabled: true
-    locale: pt_BR
-  h2.console:
-     enabled: true
-     path: /db
-  jpa:
-    show-sql: true
-    hibernate:
-        ddl-auto: create-drop
-        #database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-        #dialect: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    #driverclassname: org.postgresql.Driver
-    #url: jdbc:postgresql://localhost:5432/simuladonline
-    #username: postgres
-    #password: postgres
-    url: jdbc:h2:~/dev;DB_CLOSE_ON_EXIT=FALSE
-    platform: h2
+security:
+  oauth2:
+    client:
+      client-secret: angular_password_123
+      client-id: angular
+      scope: password
+h2.console:
+    enabled: true
+    path: /db
+jpa:
+  show-sql: true
+  hibernate:
+    ddl-auto: create-drop
+    #database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    #dialect: org.hibernate.dialect.PostgreSQLDialect
+datasource:
+  #driverclassname: org.postgresql.Driver
+  #url: jdbc:postgresql://localhost:5432/simuladonline
+  #username: postgres
+  #password: postgres
+  url: jdbc:h2:~/dev;DB_CLOSE_ON_EXIT=FALSE
+  platform: h2
