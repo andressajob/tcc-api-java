@@ -37,7 +37,7 @@ public class HomeResource {
     }
 
     @GetMapping("/finances")
-    public List<Finances> getUserFinances(){
-        return financesService.findAll();
+    public List<Finances> getUserFinances() {
+        return financesService.findAllCostTrue();
     }
 }

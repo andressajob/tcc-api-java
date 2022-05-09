@@ -20,4 +20,8 @@ public class FinancesService {
         return financesRepository.findAll();
     }
 
+    public List<Finances> findAllCostTrue() {
+        return financesRepository.findByCostTrue();
+    }
+
 }
