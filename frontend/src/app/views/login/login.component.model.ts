@@ -1,13 +1,13 @@
 export class User {
     id: number;
-    name: string;
     username: string;
-    email: string;
     password: string;
-    roles: Roles[];
+    email: string;
+    enabled: string;
 }
 
-export class Roles {
+export class Authorities {
     id: number;
-    role: string;
+    authority: string;
+    username: string;
 }

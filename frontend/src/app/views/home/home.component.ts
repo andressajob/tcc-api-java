@@ -1,15 +1,12 @@
 import { HeaderService } from './../../components/template/header/header.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DespesaComponent } from '../despesa/despesa.component';
-
-
-export interface PeriodicElement {
-  descricaoDespesa: string;
-  nomeDespesa: string;
-  valorDespesa: number;
-  actions: string;
-}
+import { HomeService } from './home.component.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import { Cost } from '../despesa/despesa.component.model';
 
 interface Mes {
   value: string;
@@ -21,25 +18,25 @@ interface Ano {
   viewValue: string;
 }
 
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {nomeDespesa: 'Marisa', descricaoDespesa: 'descrição', valorDespesa: 20, actions: ''},
-  {nomeDespesa: 'Renner', descricaoDespesa: 'descrição', valorDespesa: 25, actions: ''},
-  {nomeDespesa: 'Amazon', descricaoDespesa: 'descrição', valorDespesa: 25, actions: ''},
-];
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+
+
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   EDIT_DESPESA: string =  'Edit Despesa'
   ADICIONAR_DESPESA: string = 'Adicionar Despesa'
+  costs: Cost[] = [];
   
 
   displayedColumns: string[] = ['nomeDespesa', 'descricaoDespesa', 'valorDespesa', 'actions'];
-  dataSource = ELEMENT_DATA;
+  dataSource: MatTableDataSource<Cost>;
   mes: string;
   ano: string;
   valorRestanteDoMes: number;
@@ -70,7 +67,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private headerService: HeaderService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private homeService: HomeService
     ) {
     headerService.headerData = {
       title: 'Início',
@@ -82,6 +80,21 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.updateSelectedValueMes();
     this.updateSelectedValueAno();
+    this.getCost();
+  }
+
+  ngAfterViewInit(){
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   updateSelectedValueMes(){
@@ -99,15 +112,24 @@ export class HomeComponent implements OnInit {
   }
 
   calcularValorRestanteDoMes() {
-    var totalDespesas = ELEMENT_DATA.reduce( function(a, b){
-      return a + b['valorDespesa'];
-    }, 0);
-    this.valorRestanteDoMes = this.valorTotalDisponivel - totalDespesas;
-    return this.valorRestanteDoMes;
+    // var totalDespesas = ELEMENT_DATA.reduce( function(a, b){
+    //   return a + b['valorDespesa'];
+    // }, 0);
+    // this.valorRestanteDoMes = this.valorTotalDisponivel - totalDespesas;
+    // return this.valorRestanteDoMes;
   }
 
   openDespesaDialog() {
     this.dialog.open(DespesaComponent);
+  }
+
+  getCost() {
+    this.homeService.cost().subscribe(data => {
+      this.costs = data;
+      console.log(this.costs);
+      
+      this.dataSource = new MatTableDataSource(this.costs);
+    });
   }
 
 }

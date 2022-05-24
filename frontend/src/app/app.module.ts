@@ -37,8 +37,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle'; 
 
 
 
@@ -76,15 +75,13 @@ registerLocaleData(localePt);
     MatPaginatorModule,
     MatSortModule,
     MatAutocompleteModule,
-    BrowserModule,
     AppRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
-    MatSlideToggleModule,
+    MatSlideToggleModule
     
   ],
   providers: [{

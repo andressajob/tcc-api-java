@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../model/user';
-import { Observable } from 'rxjs/Observable';
+import { Cost } from '../despesa/despesa.component.model';
 
-@Injectable()
-export class UserService {
-
-  private usersUrl: string;
+@Injectable({
+  providedIn: 'root'
+})
+export class HomeService {
+  private financesUrl: string;
 
   constructor(private http: HttpClient) {
-    this.usersUrl = 'http://localhost:8080/users';
+    this.financesUrl = 'http://localhost:8080/finances';
   }
 
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl);
-  }
-
-  public save(user: User) {
-    return this.http.post<User>(this.usersUrl, user);
+  public cost() {
+    return this.http.get<Cost[]>(this.financesUrl);
   }
 }
+
