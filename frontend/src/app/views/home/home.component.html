@@ -2,7 +2,7 @@
 <h1 style="display: inline;">Finanças do mês de {{ mes }}</h1>
 
 <span class="span-actions-title">
-<button class="button" mat-raised-button (click)="openDespesaDialog()">Adicionar nova Despesa</button>
+<button class="button" mat-raised-button (click)="AddCost({})">Adicionar nova Despesa</button>
 
 <mat-form-field appearance="fill">
   <mat-label>Mês de despesas</mat-label>
@@ -54,12 +54,12 @@
     <th mat-header-cell *matHeaderCellDef>  </th>
     <td mat-cell *matCellDef="let cost">
       <span class="button-action">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="deleteCost(cost)">
           <mat-icon>delete</mat-icon>
         </button>
       </span>
       <span class="button-action">
-        <button mat-icon-button (click)="openDespesaDialog()">
+        <button mat-icon-button (click)="editCost(cost)">
           <mat-icon>edit</mat-icon>
         </button>
       </span>

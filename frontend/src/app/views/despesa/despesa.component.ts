@@ -1,33 +1,36 @@
-import { HeaderService } from '../../components/template/header/header.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
-import {MatDialog} from '@angular/material/dialog';
-import { DespesaService } from './despesa.component.service';
+import { Component, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Cost } from './despesa.component.model';
+import { HomeComponent } from '../home/home.component';
+
+
+export interface DialogData {
+  title: string;
+  button: string;
+  cost : Cost;
+}
 
 @Component({
   selector: 'app-despesa',
   templateUrl: './despesa.component.html',
   styleUrls: ['./despesa.component.css']
 })
-export class DespesaComponent implements OnInit {
-  
-  cost: Cost;
-  title: string;
-  constructor(private router: Router, 
-    private headerService: HeaderService,
-    private despesaService: DespesaService) {
-    headerService.headerData = {
-      title: 'Cadastro de Produtos',
-      icon: 'storefront',
-      routeUrl: '/products'
-    }
+export class DespesaComponent{
+
+  action:string;
+  local_data:any;
+  costReset : Cost;
+  constructor(
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<HomeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,) {
+      this.local_data = {...data, cost:{...data.cost}};
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-    this.despesaService.addCost(this.cost).subscribe(data => {
-      console.log(data);
-    });
+  doAction(){
+    this.dialogRef.close(this.local_data);
   }
-
 }

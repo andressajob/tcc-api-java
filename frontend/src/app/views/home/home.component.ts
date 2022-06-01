@@ -7,6 +7,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Cost } from '../despesa/despesa.component.model';
+import { DespesaService } from '../despesa/despesa.component.service';
+import { MessageBarService } from 'src/app/components/template/message-bar/message-bar.service';
 
 interface Mes {
   value: string;
@@ -38,25 +40,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['nomeDespesa', 'descricaoDespesa', 'valorDespesa', 'actions'];
   dataSource: MatTableDataSource<Cost>;
   mes: string;
+  
+  cost: Cost;
   ano: string;
   valorRestanteDoMes: number;
   valorTotalDisponivel: number = 2000;
-  selectedValueMes: string = 'janeiro';
+  selectedValueMes: string = '1';
   selectedValueAno: string = '2022';
   titleOpenDespesaDialog: string;
 
   meses: Mes[] = [
-    {value: 'janeiro', viewValue: 'Janeiro'},
-    {value: 'fevereiro', viewValue: 'Fevereiro'},
-    {value: 'marco', viewValue: 'Março'},
-    {value: 'abril', viewValue: 'Abril'},
-    {value: 'junho', viewValue: 'Junho'},
-    {value: 'julho', viewValue: 'Julho'},
-    {value: 'agosto', viewValue: 'Agosto'},
-    {value: 'setembro', viewValue: 'Setembro'},
-    {value: 'outubro', viewValue: 'Outubro'},
-    {value: 'novembro', viewValue: 'Novembro'},
-    {value: 'dezembro', viewValue: 'Dezembro'},
+    {value: '1', viewValue: 'Janeiro'},
+    {value: '2', viewValue: 'Fevereiro'},
+    {value: '3', viewValue: 'Março'},
+    {value: '4', viewValue: 'Abril'},
+    {value: '5', viewValue: 'Maio'},
+    {value: '6', viewValue: 'Junho'},
+    {value: '7', viewValue: 'Julho'},
+    {value: '8', viewValue: 'Agosto'},
+    {value: '9', viewValue: 'Setembro'},
+    {value: '10', viewValue: 'Outubro'},
+    {value: '11', viewValue: 'Novembro'},
+    {value: '12', viewValue: 'Dezembro'},
   ];
 
   anos: Ano[] = [
@@ -67,8 +72,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(
     private headerService: HeaderService,
+    private messageBarService: MessageBarService,
     public dialog: MatDialog,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private despesaService: DespesaService
     ) {
     headerService.headerData = {
       title: 'Início',
@@ -84,8 +91,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    //this.dataSource.paginator = this.paginator;
+    //this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -125,10 +132,49 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getCost() {
     this.homeService.cost().subscribe(data => {
-      this.costs = data;
-      console.log(this.costs);
-      
+      this.costs = data;      
       this.dataSource = new MatTableDataSource(this.costs);
+    });
+  }
+
+  
+  editCost(cost){
+    const dialogRef = this.dialog.open(DespesaComponent, {
+      width: '450px',
+      data: {title: 'Editar Renda', button: 'Salvar', cost},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {      
+      if (result) {
+        this.despesaService.editCost(result.cost).subscribe(data => {   
+          this.getCost();      
+          this.messageBarService.success('Editado com sucesso', 'Ok');
+        });
+      }
+    });
+  }
+
+  deleteCost(cost: Cost) {
+    this.despesaService.deleteCost(cost.id).subscribe(data => {
+      this.getCost();
+      this.messageBarService.success('Deletado com sucesso', 'Ok');
+    });
+  }
+
+  AddCost(cost) {    
+    const dialogRef = this.dialog.open(DespesaComponent, {
+      data: {title: 'Adicionar Despesa', button: 'Adicionar', cost},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {      
+        const month = Number(this.selectedValueMes);
+        const year = Number(this.selectedValueAno);
+        this.despesaService.addCost({...result.cost, month, year}).subscribe(data => { 
+          this.getCost();      
+          this.messageBarService.success('Adicionado com sucesso', 'Ok');
+        });
+      }
     });
   }
 

@@ -1,5 +1,5 @@
 export class Cost {
-    id: number;
+    id?: number;
     name: string;
     value: number;
     description: string;
