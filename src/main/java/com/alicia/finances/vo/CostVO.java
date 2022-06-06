@@ -68,4 +68,16 @@ public class CostVO {
     public void setYear(int year) {
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return "CostVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", value=" + value +
+                ", description='" + description + '\'' +
+                ", month=" + month +
+                ", year=" + year +
+                '}';
+    }
 }

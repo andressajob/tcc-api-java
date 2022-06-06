@@ -22,9 +22,9 @@ public class FinancesService {
         return financesRepository.findAll();
     }
 
-    public List<CostVO> findAllCostTrue() {
+    public List<CostVO> findByYearAndMonthAndCostTrue(int year, int month) {
         List<CostVO> costVOS = new ArrayList<>();
-        for (Finances finances: financesRepository.findByCostTrue()) {
+        for (Finances finances: financesRepository.findByYearAndMonthAndCostTrue(year, month)) {
             costVOS.add(new CostVO(finances.getId(),
                     finances.getName(), finances.getValue(),
                     finances.getDescription(),finances.getMonth(),

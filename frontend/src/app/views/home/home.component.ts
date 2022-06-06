@@ -9,6 +9,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Cost } from '../despesa/despesa.component.model';
 import { DespesaService } from '../despesa/despesa.component.service';
 import { MessageBarService } from 'src/app/components/template/message-bar/message-bar.service';
+import { Subject } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
 
 interface Mes {
   value: string;
@@ -26,9 +28,6 @@ interface Ano {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-
-
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -36,11 +35,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ADICIONAR_DESPESA: string = 'Adicionar Despesa'
   costs: Cost[] = [];
   
-
   displayedColumns: string[] = ['nomeDespesa', 'descricaoDespesa', 'valorDespesa', 'actions'];
   dataSource: MatTableDataSource<Cost>;
-  mes: string;
-  
   cost: Cost;
   ano: string;
   valorRestanteDoMes: number;
@@ -70,6 +66,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     {value: '2022', viewValue: '2022'},
   ];
 
+  month = this.meses[(new Date()).getMonth()].viewValue;
+  year = (new Date()).getFullYear();
+
+  seletorsGroup = new FormGroup({
+    monthForm: new FormControl(`${(new Date()).getMonth() + 1}`),
+    yearForm: new FormControl(`${(new Date()).getFullYear()}`),
+  });
   constructor(
     private headerService: HeaderService,
     private messageBarService: MessageBarService,
@@ -85,9 +88,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.updateSelectedValueMes();
-    this.updateSelectedValueAno();
-    this.getCost();
+    this.seletorsGroup.get('monthForm').valueChanges.subscribe(month => {
+      this.month = this.meses.find(mes => mes.value === month).viewValue 
+      this.getCost();
+    });
+
+    this.seletorsGroup.get('yearForm').valueChanges.subscribe(year => {
+      this.year = year;
+      this.getCost();
+    });
+      
+    // this.updateSelectedValueMes();
+    // this.updateSelectedValueAno();
+   
   }
 
   ngAfterViewInit(){
@@ -106,15 +119,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   updateSelectedValueMes(){
     if (this.selectedValueMes) {
-    var mesAtual = this.meses.find(x => x.value === this.selectedValueMes);
-    this.mes = mesAtual.viewValue;
+      var mesAtual = this.meses.find(x => x.value === this.selectedValueMes);
+      //this.mes.next(mesAtual.viewValue); 
     }
   }
 
   updateSelectedValueAno(){
     if (this.selectedValueAno) {
-    var anoAtual = this.anos.find(x => x.value === this.selectedValueAno);
-    this.ano = anoAtual.viewValue;
+      var anoAtual = this.anos.find(x => x.value === this.selectedValueAno);
+      this.ano = anoAtual.viewValue;
     }
   }
 
@@ -131,7 +144,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   getCost() {
-    this.homeService.cost().subscribe(data => {
+    //this.mes.subscribe(month =>
+    this.homeService.cost(this.seletorsGroup.get('yearForm').value, this.seletorsGroup.get('monthForm').value).subscribe(data => {
       this.costs = data;      
       this.dataSource = new MatTableDataSource(this.costs);
     });
@@ -167,14 +181,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {      
-        const month = Number(this.selectedValueMes);
-        const year = Number(this.selectedValueAno);
-        this.despesaService.addCost({...result.cost, month, year}).subscribe(data => { 
-          this.getCost();      
-          this.messageBarService.success('Adicionado com sucesso', 'Ok');
-        });
-      }
+      // if (result) {
+      //   this.despesaService.addCost({...result.cost, this.month, year}).subscribe(data => { 
+      //     this.getCost();      
+      //     this.messageBarService.success('Adicionado com sucesso', 'Ok');
+      //   });
+      // }
     });
   }
 

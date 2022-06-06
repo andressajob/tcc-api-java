@@ -11,4 +11,6 @@ public interface FinancesRepository extends JpaRepository<Finances, Long> {
     List<Finances> findByCostTrue();
 
     List<Finances> findByCostFalse();
+
+    List<Finances> findByYearAndMonthAndCostTrue(int year, int month);
 }

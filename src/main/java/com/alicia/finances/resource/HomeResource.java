@@ -37,10 +37,10 @@ public class HomeResource {
         return reportService.findAll();
     }
 
-    @GetMapping("/finances")
-    public List<CostVO> getFinances() {
+    @GetMapping("/finances/{year}/{month}")
+    public List<CostVO> getFinances(@PathVariable("year") int year, @PathVariable("month") int month) {
 
-        return financesService.findAllCostTrue();
+        return financesService.findByYearAndMonthAndCostTrue(year, month);
     }
     @GetMapping("/income")
     public List<Finances> getIncomeFinances() {
@@ -49,6 +49,7 @@ public class HomeResource {
     }
     @PostMapping("/addCost")
     public void addCost(@RequestBody CostVO costVO) {
+        System.out.println(costVO.toString());
         financesService.addCost(costVO);
     }
     @DeleteMapping("/deleteCost/{id}")

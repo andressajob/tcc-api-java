@@ -9,11 +9,11 @@ export class HomeService {
   private financesUrl: string;
 
   constructor(private http: HttpClient) {
-    this.financesUrl = 'http://localhost:8080/finances';
+    this.financesUrl = 'http://localhost:8080/finances/';
   }
 
-  public cost() {
-    return this.http.get<Cost[]>(this.financesUrl);
+  public cost(year: number, month: number) {
+    return this.http.get<Cost[]>(this.financesUrl + year + '/' + month );
   }
 }
 
