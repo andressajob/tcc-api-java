@@ -4,6 +4,7 @@ package com.alicia.finances.service;
 import com.alicia.finances.model.Finances;
 import com.alicia.finances.repository.FinancesRepository;
 import com.alicia.finances.vo.CostVO;
+import com.alicia.finances.vo.IncomeVo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,8 +33,11 @@ public class FinancesService {
         }
         return costVOS;
     }
-    public List<Finances> findAllCostFalse() {
-        return financesRepository.findByCostFalse();
+    public IncomeVo findByYearAndMonthAndCostFalse(int year, int month) {
+        Finances finances = financesRepository.findByYearAndMonthAndCostFalse(year, month);
+        return new IncomeVo(finances.getId(),finances.getValue(),
+                finances.getDescription(),finances.getMonth(),
+                finances.getYear());
     }
     public Finances addCost(CostVO costVO) {
         Finances finances = new Finances();
@@ -45,7 +49,6 @@ public class FinancesService {
         finances.setYear(costVO.getYear());
         return financesRepository.save(finances);
     }
-
     public void deleteCost(String id) {
         financesRepository.deleteById(Long.parseLong(id));
     }
@@ -58,6 +61,15 @@ public class FinancesService {
         finances.setValue(costVO.getValue());
         finances.setMonth(costVO.getMonth());
         finances.setYear(costVO.getYear());
+        financesRepository.save(finances);
+    }
+    public void editIncome(IncomeVo incomeVO) {
+        Finances finances = financesRepository.getOne(incomeVO.getId());
+        finances.setCost(false);
+        finances.setDescription(incomeVO.getDescription());
+        finances.setValue(incomeVO.getValue());
+        finances.setMonth(incomeVO.getMonth());
+        finances.setYear(incomeVO.getYear());
         financesRepository.save(finances);
     }
 }

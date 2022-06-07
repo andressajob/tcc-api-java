@@ -1,5 +1,7 @@
-export class Renda {
-    id: string;
-    name: string;
-    email: string;
+export class Income {
+    id?: number;
+    value: number;
+    description: string;
+    month: number;
+    year: number;
 }

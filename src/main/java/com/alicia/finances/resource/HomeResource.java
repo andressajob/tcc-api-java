@@ -9,6 +9,7 @@ import com.alicia.finances.service.FinancesService;
 import com.alicia.finances.service.ReportService;
 import com.alicia.finances.service.UserService;
 import com.alicia.finances.vo.CostVO;
+import com.alicia.finances.vo.IncomeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,19 +34,16 @@ public class HomeResource {
 
     @GetMapping("/report")
     public List<Report> getUserReport() {
-
         return reportService.findAll();
     }
-
     @GetMapping("/finances/{year}/{month}")
     public List<CostVO> getFinances(@PathVariable("year") int year, @PathVariable("month") int month) {
 
         return financesService.findByYearAndMonthAndCostTrue(year, month);
     }
-    @GetMapping("/income")
-    public List<Finances> getIncomeFinances() {
-
-        return financesService.findAllCostFalse();
+    @GetMapping("/income/{year}/{month}")
+    public IncomeVo getIncomeFinances(@PathVariable("year") int year, @PathVariable("month") int month) {
+        return financesService.findByYearAndMonthAndCostFalse(year, month);
     }
     @PostMapping("/addCost")
     public void addCost(@RequestBody CostVO costVO) {
@@ -59,5 +57,9 @@ public class HomeResource {
     @PutMapping("/editCost")
     public void editCost(@RequestBody CostVO costVO) {
         financesService.editCost(costVO);
+    }
+    @PutMapping("/editIncome")
+    public void editIncome(@RequestBody IncomeVo incomeVO) {
+        financesService.editIncome(incomeVO);
     }
 }

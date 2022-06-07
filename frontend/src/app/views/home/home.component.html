@@ -2,12 +2,19 @@
 <h1 style="display: inline;">Finanças do mês de {{ month }}</h1>
 
 <span class="span-actions-title">
-<button class="button" mat-raised-button (click)="AddCost({})">Adicionar nova Despesa</button>
+<button class="button" mat-raised-button (click)="addCost({})">
+  <mat-icon>add</mat-icon> 
+  Despesa
+</button>
+<button class="button" (click)="EditIncome()" mat-raised-button>
+  <mat-icon>edit</mat-icon>
+  Renda
+</button>
 
 <form [formGroup]="seletorsGroup" style="display: inline;">
 <mat-form-field appearance="fill">
   <mat-label>Mês de despesas</mat-label>
-  <mat-select name="mes" (selectionChange)="updateSelectedValueMes()" formControlName="monthForm">
+  <mat-select name="mes" formControlName="monthForm">
     <mat-option *ngFor="let mes of meses" [value]="mes.value">
       {{mes.viewValue}}
     </mat-option>
@@ -16,7 +23,7 @@
 
 <mat-form-field style="margin-left: 10px" appearance="fill">
   <mat-label>Ano</mat-label>
-  <mat-select name="ano" (selectionChange)="updateSelectedValueAno()" formControlName="yearForm">
+  <mat-select name="ano" formControlName="yearForm">
     <mat-option *ngFor="let ano of anos" [value]="ano.value">
       {{ano.viewValue}}
     </mat-option>
@@ -30,7 +37,7 @@
     <mat-card-subtitle class="subtitle">
         Renda disponivel do mês de {{month}}
         <span class="span-valor">R$: 
-          <span style="color: #45A94F;">{{valorTotalDisponivel}}</span>
+          <span style="color: #45A94F;">{{income ? income.value : '...'}}</span>
         </span>
     </mat-card-subtitle>
 </mat-card>
@@ -78,7 +85,7 @@
   <mat-card-subtitle class="subtitle">
       Renda restante do mês de {{month}} 
       <span class="span-valor">R$:
-         <span style="color: #EAAC0E;">{{calcularValorRestanteDoMes()}}</span>
+         <span style="color: #EAAC0E;"></span>
       </span>
   </mat-card-subtitle>
 </mat-card>
