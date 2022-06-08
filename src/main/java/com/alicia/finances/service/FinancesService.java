@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FinancesService {
@@ -34,7 +35,7 @@ public class FinancesService {
         return costVOS;
     }
     public IncomeVo findByYearAndMonthAndCostFalse(int year, int month) {
-        Finances finances = financesRepository.findByYearAndMonthAndCostFalse(year, month);
+        Finances finances = financesRepository.findByYearAndMonthAndCostFalse(year, month).orElse(new Finances());
         return new IncomeVo(finances.getId(),finances.getValue(),
                 finances.getDescription(),finances.getMonth(),
                 finances.getYear());
@@ -64,12 +65,17 @@ public class FinancesService {
         financesRepository.save(finances);
     }
     public void editIncome(IncomeVo incomeVO) {
-        Finances finances = financesRepository.getOne(incomeVO.getId());
-        finances.setCost(false);
-        finances.setDescription(incomeVO.getDescription());
-        finances.setValue(incomeVO.getValue());
-        finances.setMonth(incomeVO.getMonth());
-        finances.setYear(incomeVO.getYear());
-        financesRepository.save(finances);
+        Finances finances;
+        if (incomeVO.getId() == null) {
+            finances = new Finances();
+        } else {
+            finances = financesRepository.getOne(incomeVO.getId());
+        }
+            finances.setCost(false);
+            finances.setDescription(incomeVO.getDescription());
+            finances.setValue(incomeVO.getValue());
+            finances.setMonth(incomeVO.getMonth());
+            finances.setYear(incomeVO.getYear());
+            financesRepository.save(finances);
     }
 }

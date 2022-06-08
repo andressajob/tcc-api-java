@@ -32,13 +32,13 @@ import { RedDirective } from './directives/red.directive';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from  '@angular/common';
 import { ForDirective } from './directives/for.directive';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 

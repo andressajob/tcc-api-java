@@ -58,4 +58,15 @@ public class IncomeVo {
     public void setYear(int year) {
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return "IncomeVo{" +
+                "id=" + id +
+                ", value=" + value +
+                ", description='" + description + '\'' +
+                ", month=" + month +
+                ", year=" + year +
+                '}';
+    }
 }

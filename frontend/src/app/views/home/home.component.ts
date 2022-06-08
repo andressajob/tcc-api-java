@@ -1,11 +1,11 @@
 import { HeaderService } from './../../components/template/header/header.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DespesaComponent } from '../despesa/despesa.component';
 import { HomeService } from './home.component.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Cost } from '../despesa/despesa.component.model';
 import { DespesaService } from '../despesa/despesa.component.service';
 import { MessageBarService } from 'src/app/components/template/message-bar/message-bar.service';
@@ -29,7 +29,8 @@ interface Ano {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
   income: Income = null;
 
   displayedColumns: string[] = ['nomeDespesa', 'descricaoDespesa', 'valorDespesa', 'actions'];
-  dataSource: MatTableDataSource<Cost>;
+  dataSource = new MatTableDataSource<Cost>();
   cost: Cost;
   ano: string;
 
@@ -71,6 +72,7 @@ export class HomeComponent implements OnInit {
     monthForm: new FormControl(`${(new Date()).getMonth() + 1}`),
     yearForm: new FormControl(`${(new Date()).getFullYear()}`),
   });
+
   constructor(
     private headerService: HeaderService,
     private messageBarService: MessageBarService,
@@ -101,6 +103,11 @@ export class HomeComponent implements OnInit {
     
   }
 
+  ngAfterViewInit() {
+    // this.dataSource.paginator = this.paginator;
+    // console.log(this.paginator);
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -117,7 +124,7 @@ export class HomeComponent implements OnInit {
   getCost() {
     this.homeService.getCost(this.seletorsGroup.get('yearForm').value, this.seletorsGroup.get('monthForm').value).subscribe(data => {
       this.costs = data;      
-      this.dataSource = new MatTableDataSource(this.costs);
+      this.dataSource.data = this.costs;
     });
   }
 
@@ -156,18 +163,27 @@ export class HomeComponent implements OnInit {
       data: {title: 'Adicionar Despesa', button: 'Adicionar', cost},
     });
 
-    dialogRef.afterClosed().subscribe(result => { });
-  }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        result.cost.year = this.seletorsGroup.get('yearForm').value;
+        result.cost.month = this.seletorsGroup.get('monthForm').value;
+        this.despesaService.addCost(result.cost).subscribe(data => {   
+          this.getCost();      
+          this.messageBarService.success('Adicionado com sucesso', 'Ok');
+        });
+      }});
+    }
 
   EditIncome() {    
     const dialogRef = this.dialog.open(RendaComponent, {
       data: {title: 'Editar Renda', button: 'Editar', income: this.income},
     });
-    console.log(this.income);
     dialogRef.afterClosed().subscribe(result => {      
     if (result) {
-      this.rendaService.editIncome(result.cost).subscribe(data => {   
-        this.getIncome();      
+      result.income.year = this.seletorsGroup.get('yearForm').value;
+      result.income.month = this.seletorsGroup.get('monthForm').value;
+      this.rendaService.editIncome(result.income).subscribe(data => {   
+        this.getIncome();
         this.messageBarService.success('Editado com sucesso', 'Ok');
       });
     }});

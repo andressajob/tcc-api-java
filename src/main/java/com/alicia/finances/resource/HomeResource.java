@@ -10,6 +10,7 @@ import com.alicia.finances.service.ReportService;
 import com.alicia.finances.service.UserService;
 import com.alicia.finances.vo.CostVO;
 import com.alicia.finances.vo.IncomeVo;
+import com.alicia.finances.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,6 @@ public class HomeResource {
     }
     @PostMapping("/addCost")
     public void addCost(@RequestBody CostVO costVO) {
-        System.out.println(costVO.toString());
         financesService.addCost(costVO);
     }
     @DeleteMapping("/deleteCost/{id}")
@@ -60,6 +60,11 @@ public class HomeResource {
     }
     @PutMapping("/editIncome")
     public void editIncome(@RequestBody IncomeVo incomeVO) {
+        System.out.println(incomeVO.toString());
         financesService.editIncome(incomeVO);
+    }
+    @PostMapping("/addUser")
+    public void addUser(@RequestBody UserVo userVO) {
+        userService.addUser(userVO);
     }
 }

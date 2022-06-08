@@ -63,6 +63,15 @@ table {
     float: right;
 }
 
+.no-income {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #FF9736;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 14px;
+}
+
 @media only screen and (max-width: 460px) {
     .button {
         margin: 15px 0px 15px 0px;
