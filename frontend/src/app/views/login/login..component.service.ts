@@ -9,9 +9,11 @@ import { User } from './login.component.model';
 export class LoginService {
 
   private usersUrl: string;
+  private usersAddUrl: string;
 
   constructor(private http: HttpClient) {
     this.usersUrl = 'http://localhost:8080/users';
+    this.usersAddUrl = 'http://localhost:8080/addUser';
   }
 
   public findAll(): Observable<User[]> {
@@ -19,6 +21,8 @@ export class LoginService {
   }
 
   public save(user: User) {
-    return this.http.post<User>(this.usersUrl, user);
+    return this.http.post<User>(this.usersAddUrl, user);
   }
 }
+
+

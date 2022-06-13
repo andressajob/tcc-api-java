@@ -92,5 +92,4 @@ export class LoginComponent implements OnInit {
   openUserDialog() {
     this.dialog.open(UserComponent);
   }
-
 }

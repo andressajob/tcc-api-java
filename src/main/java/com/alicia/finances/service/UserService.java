@@ -43,13 +43,13 @@ public class UserService {
         User user = new User();
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        String hashedPassword = passwordEncoder.encode(user.getPassword()); //encript password
+        String hashedPassword = passwordEncoder.encode(userVo.getPassword()); //encript password
         user.setPassword(hashedPassword);
 
         user.setName(userVo.getName());
         user.setUsername(userVo.getUsername());
         user.setEmail(userVo.getEmail());
-        user.setPassword(userVo.getPassword());
+        user.setPassword(hashedPassword);
         user.setEnabled(true);
         return userRepository.save(user);
     }

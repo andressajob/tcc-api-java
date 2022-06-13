@@ -1,13 +1,7 @@
 export class User {
-    id: number;
+    id?: number;
     username: string;
     password: string;
     email: string;
-    enabled: string;
-}
-
-export class Authorities {
-    id: number;
-    authority: string;
-    username: string;
+    enabled: boolean = true;
 }

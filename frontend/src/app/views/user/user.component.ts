@@ -2,13 +2,10 @@ import { HeaderService } from '../../components/template/header/header.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import {MatDialog} from '@angular/material/dialog';
-import {FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, Validators, ReactiveFormsModule, FormGroup} from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
-
-interface Mes {
-  value: string;
-  viewValue: string;
-}
+import { LoginService } from '../login/login..component.service';
+import { User } from '../login/login.component.model';
 
 @Component({
   selector: 'app-user',
@@ -19,30 +16,45 @@ export class UserComponent implements OnInit {
 
   hide = true;
   color: ThemePalette = 'primary';
-  meses: Mes[] = [
-    {value: 'janeiro', viewValue: 'Janeiro'},
-    {value: 'fevereiro', viewValue: 'Fevereiro'},
-    {value: 'marco', viewValue: 'Março'},
-    {value: 'abril', viewValue: 'Abril'},
-    {value: 'junho', viewValue: 'Junho'},
-    {value: 'julho', viewValue: 'Julho'},
-    {value: 'agosto', viewValue: 'Agosto'},
-    {value: 'setembro', viewValue: 'Setembro'},
-    {value: 'outubro', viewValue: 'Outubro'},
-    {value: 'novembro', viewValue: 'Novembro'},
-    {value: 'dezembro', viewValue: 'Dezembro'},
-  ];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private loginService: LoginService) { }
 
-  }
 
-  emailFormControl = new FormControl('', [
+  userGroup = new FormGroup({
+
+  emailFormControl : new FormControl('', [
     Validators.required,
-    Validators.email,
-  ]);
+    Validators.email
+  ]),
+  
+  userNameFormControl : new FormControl('', [
+    Validators.required
+  ]),
+  
+  passordFormControl : new FormControl('', [
+    Validators.required
+  ]),
+
+  });
+
 
   ngOnInit(): void {
+  }
+
+  saveUser() {
+    if (!this.userGroup.valid) {
+      return;
+    }
+    let user: User  = {
+      email: this.userGroup.get('emailFormControl').value,
+      username: this.userGroup.get('userNameFormControl').value,
+      password: this.userGroup.get('passordFormControl').value,
+      enabled: true
+    }
+    this.loginService.save(user).subscribe(data => {
+    });
   }
 
 }

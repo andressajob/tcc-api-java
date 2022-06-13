@@ -5,28 +5,41 @@
 <div mat-dialog-content style="height: auto;overflow: hidden;">
   <div class="container">
 
+    <form [formGroup]="userGroup">
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Email</mat-label>
-      <input type="email" matInput [formControl]="emailFormControl" placeholder="Ex. pat@example.com">
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      <input type="email" matInput formControlName="emailFormControl" placeholder="Ex. pat@example.com">
+      <mat-error *ngIf="userGroup.get('emailFormControl').hasError('email')">
         Please enter a valid email address
       </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
+      <mat-error *ngIf="userGroup.get('emailFormControl').hasError('required')">
         Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>User Name</mat-label>
+      <input type="text" matInput formControlName="userNameFormControl">
+      <mat-error *ngIf="userGroup.get('userNameFormControl').hasError('required')">
+        User Name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
 
   <mat-form-field appearance="fill" class="label">
     <mat-label>Senha</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
+    <input matInput formControlName="passordFormControl" [type]="hide ? 'password' : 'text'">    
+    <mat-error *ngIf="userGroup.get('passordFormControl').hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
+  </form>
   </div>
 </div>
 <div style="float: right;" mat-dialog-actions>
 
   <button mat-button mat-dialog-close class="button-close">Cancelar</button>
-  <button class="button" routerLink="home" mat-raised-button >Entrar no Finances</button>
+  <button class="button" mat-raised-button (click)="saveUser()">Entrar no Finances</button>
 </div>

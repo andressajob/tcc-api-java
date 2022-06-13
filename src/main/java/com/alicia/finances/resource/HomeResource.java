@@ -29,7 +29,6 @@ public class HomeResource {
 
     @GetMapping("/users")
     public List<User> getUsers() {
-
         return userService.findAll();
     }
 
@@ -39,7 +38,6 @@ public class HomeResource {
     }
     @GetMapping("/finances/{year}/{month}")
     public List<CostVO> getFinances(@PathVariable("year") int year, @PathVariable("month") int month) {
-
         return financesService.findByYearAndMonthAndCostTrue(year, month);
     }
     @GetMapping("/income/{year}/{month}")
@@ -60,7 +58,6 @@ public class HomeResource {
     }
     @PutMapping("/editIncome")
     public void editIncome(@RequestBody IncomeVo incomeVO) {
-        System.out.println(incomeVO.toString());
         financesService.editIncome(incomeVO);
     }
     @PostMapping("/addUser")

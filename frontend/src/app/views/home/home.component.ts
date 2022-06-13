@@ -31,7 +31,13 @@ interface Ano {
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  _paginator: MatPaginator;
+  @ViewChild(MatPaginator)
+  set paginator(v: MatPaginator) {
+    this._paginator = v;    
+    this.dataSource.paginator = this._paginator;
+    console.log(v);
+  }
   @ViewChild(MatSort) sort: MatSort;
 
   EDIT_DESPESA: string =  'Edit Despesa'
@@ -100,12 +106,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.getCost();
       this.getIncome();
     });
+    this.getCost();
+    this.getIncome();
     
   }
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // console.log(this.paginator);
+
+    
   }
 
   applyFilter(event: Event) {
@@ -151,6 +159,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
+  get availableIncome(): number{
+    if (!this.income) {
+      return 0;
+    }
+    return this.income.value - this.costs.reduce((acc, cost) => acc + cost.value, 0);
+  }
+
   deleteCost(cost: Cost) {
     this.despesaService.deleteCost(cost.id).subscribe(data => {
       this.getCost();
@@ -167,7 +182,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       if (result) {
         result.cost.year = this.seletorsGroup.get('yearForm').value;
         result.cost.month = this.seletorsGroup.get('monthForm').value;
-        this.despesaService.addCost(result.cost).subscribe(data => {   
+        this.despesaService.addCost(result.cost).subscribe(data => {
           this.getCost();      
           this.messageBarService.success('Adicionado com sucesso', 'Ok');
         });
