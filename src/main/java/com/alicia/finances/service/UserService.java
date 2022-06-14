@@ -5,8 +5,6 @@ import com.alicia.finances.model.User;
 import com.alicia.finances.repository.UserRepository;
 import com.alicia.finances.vo.CostVO;
 import com.alicia.finances.vo.UserVo;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,15 +39,15 @@ public class UserService {
     public User addUser(UserVo userVo) {
 
         User user = new User();
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        //PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        String hashedPassword = passwordEncoder.encode(userVo.getPassword()); //encript password
-        user.setPassword(hashedPassword);
+        //String hashedPassword = passwordEncoder.encode(userVo.getPassword()); //encript password
+        //user.setPassword(hashedPassword);
 
         user.setName(userVo.getName());
         user.setUsername(userVo.getUsername());
         user.setEmail(userVo.getEmail());
-        user.setPassword(hashedPassword);
+        user.setPassword(userVo.getPassword());
         user.setEnabled(true);
         return userRepository.save(user);
     }
