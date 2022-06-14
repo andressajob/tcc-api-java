@@ -36,7 +36,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   set paginator(v: MatPaginator) {
     this._paginator = v;    
     this.dataSource.paginator = this._paginator;
-    console.log(v);
   }
   @ViewChild(MatSort) sort: MatSort;
 
@@ -183,7 +182,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         result.cost.year = this.seletorsGroup.get('yearForm').value;
         result.cost.month = this.seletorsGroup.get('monthForm').value;
         this.despesaService.addCost(result.cost).subscribe(data => {
-          this.getCost();      
+          this.getCost();
           this.messageBarService.success('Adicionado com sucesso', 'Ok');
         });
       }});

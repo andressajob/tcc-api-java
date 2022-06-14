@@ -14,4 +14,8 @@ export class MessageBarService {
   success(message: string, action: string= 'ok') {
     this._snackBar.open(message, action);
   }
+
+  error(message: string, action: string= 'ok') {
+    this._snackBar.open(message, action);
+  }
 }

@@ -6,6 +6,7 @@ import {FormControl, Validators, ReactiveFormsModule, FormGroup} from '@angular/
 import {ThemePalette} from '@angular/material/core';
 import { LoginService } from '../login/login..component.service';
 import { User } from '../login/login.component.model';
+import { MessageBarService } from 'src/app/components/template/message-bar/message-bar.service';
 
 @Component({
   selector: 'app-user',
@@ -19,7 +20,8 @@ export class UserComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private loginService: LoginService) { }
+    private loginService: LoginService,
+    private messageBarService: MessageBarService) { }
 
 
   userGroup = new FormGroup({
@@ -54,6 +56,12 @@ export class UserComponent implements OnInit {
       enabled: true
     }
     this.loginService.save(user).subscribe(data => {
+      if (data) {
+        this.router.navigate(['/home']);
+      } else {
+        this.messageBarService.error('Erro ao adicionar novo usuário', 'Ok');
+      }
+      
     });
   }
 

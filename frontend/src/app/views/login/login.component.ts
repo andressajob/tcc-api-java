@@ -7,6 +7,7 @@ import { LoginService } from './login..component.service';
 import { User } from './login.component.model';
 import { Auth } from './auth.type';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 
 export interface PeriodicElement {
@@ -66,7 +67,8 @@ export class LoginComponent implements OnInit {
     private headerService: HeaderService,
     public dialog: MatDialog,
     private loginService: LoginService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
     ) {
     headerService.headerData = {
       title: 'Início',
@@ -114,7 +116,8 @@ export class LoginComponent implements OnInit {
       username: this.userGroup.get('userNameFormControl').value,
       password: this.userGroup.get('passordFormControl').value
     }
-    this.authService.authentication(auth);
+    this.authService.authentication(auth); 
+    this.router.navigate(['/home']);
   }
 
   openUserDialog() {
