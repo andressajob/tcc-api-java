@@ -1,10 +1,12 @@
 import { HeaderService } from './../../components/template/header/header.service';
 import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, Validators, ReactiveFormsModule, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import { UserComponent } from '../user/user.component';
 import { LoginService } from './login..component.service';
 import { User } from './login.component.model';
+import { Auth } from './auth.type';
+import { AuthService } from './auth.service';
 
 
 export interface PeriodicElement {
@@ -63,7 +65,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private headerService: HeaderService,
     public dialog: MatDialog,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private authService: AuthService
     ) {
     headerService.headerData = {
       title: 'Início',
@@ -71,6 +74,23 @@ export class LoginComponent implements OnInit {
       routeUrl: ''
     }
   }
+
+  userGroup = new FormGroup({
+
+    emailFormControl : new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+  
+    userNameFormControl : new FormControl('', [
+      Validators.required
+    ]),
+    
+    passordFormControl : new FormControl('', [
+      Validators.required
+    ]),
+  
+    });
 
   email = new FormControl('', [Validators.required, Validators.email]);
 
@@ -83,10 +103,18 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loginService.findAll().subscribe(data => {
-      this.users = data;
-      console.log(this.users);
-    });
+  }
+
+  openApplication() {
+
+    if (!this.userGroup.valid) {
+      return;
+    }
+    let auth: Auth  = {
+      username: this.userGroup.get('userNameFormControl').value,
+      password: this.userGroup.get('passordFormControl').value
+    }
+    this.authService.authentication(auth);
   }
 
   openUserDialog() {

@@ -7,29 +7,25 @@ import { Auth } from './auth.type';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
 
   private usersUrl: string;
   private usersAddUrl: string;
   private authUrl: string;
+  public token: string;
 
   constructor(private http: HttpClient) {
     this.usersUrl = 'http://localhost:8080/users';
     this.usersAddUrl = 'http://localhost:8080/addUser';
     this.authUrl = 'http://localhost:8080/oauth/token';
-  }
-
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl);
-  }
-
-  public save(user: User) {
-    return this.http.post<User>(this.usersAddUrl, user);
+    this.token = localStorage.getItem('token');
   }
 
   public authentication(auth: Auth) {
-    return this.http.post<Auth>(this.authUrl, auth);
+    return this.http.post<any>(this.authUrl, auth).subscribe(token => {
+        this.token = token;
+        localStorage.setItem('token', token);
+    });
   }
 }
-
 
